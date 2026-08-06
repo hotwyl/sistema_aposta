@@ -1,0 +1,66 @@
+# docker compose -f docker-compose.dev.yml up
+# Sobe MariaDB, phpMyAdmin e OmniRoute para desenvolvimento local.
+# A aplicação roda fora do container com `npm run dev`.
+
+services:
+  db:
+    image: mariadb:11-jammy
+    container_name: sistema-aposta-db-dev
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: sistema_aposta
+      MYSQL_USER: aposta
+      MYSQL_PASSWORD: aposta123
+    ports:
+      - "3306:3306"
+    volumes:
+      - dbdata-dev:/var/lib/mysql
+      - ./docker/init-db.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    command: >
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+      --innodb-buffer-pool-size=128M
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - dev-network
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: sistema-aposta-phpmyadmin-dev
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: root
+      UPLOAD_LIMIT: 50M
+    ports:
+      - "8080:80"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - dev-network
+
+  omniroute:
+    image: diegosouzapw/omniroute:latest
+    container_name: sistema-aposta-omniroute-dev
+    ports:
+      - "20128:3000"
+    volumes:
+      - omniroute-dev-data:/app/data
+    environment:
+      - PORT=3000
+    networks:
+      - dev-network
+
+volumes:
+  dbdata-dev:
+  omniroute-dev-data:
+
+networks:
+  dev-network:
+    driver: bridge

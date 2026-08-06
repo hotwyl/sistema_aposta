@@ -1,0 +1,36 @@
+{
+  "app": {
+    "name": "Sistema de Aposta",
+    "description": "Análise e gestão inteligente de apostas em loterias brasileiras"
+  },
+  "nav": {
+    "home": "Início",
+    "apostas": "Apostas",
+    "concursos": "Concursos",
+    "simulador": "Simulador",
+    "analisador": "Analisador",
+    "importador": "Importador",
+    "conferencia": "Conferência"
+  },
+  "common": {
+    "loading": "Carregando...",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "delete": "Excluir",
+    "edit": "Editar",
+    "create": "Criar",
+    "search": "Buscar...",
+    "filter": "Filtrar",
+    "all": "Todos",
+    "actions": "Ações",
+    "confirm": "Confirmar",
+    "back": "Voltar",
+    "next": "Próximo",
+    "previous": "Anterior",
+    "noData": "Nenhum registro encontrado."
+  },
+  "loteria": {
+    "lotofacil": "Lotofácil",
+    "lotomania": "Lotomania"
+  }
+}

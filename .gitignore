@@ -1,0 +1,28 @@
+# Nuxt
+.nuxt
+.output
+.data
+.nitro
+.cache
+
+# Node
+node_modules
+
+# Env
+.env
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Backup
+bkp/

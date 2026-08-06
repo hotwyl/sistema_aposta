@@ -1,0 +1,36 @@
+{
+  "app": {
+    "name": "Betting System",
+    "description": "Smart analysis and management of Brazilian lottery bets"
+  },
+  "nav": {
+    "home": "Home",
+    "apostas": "Bets",
+    "concursos": "Draws",
+    "simulador": "Simulator",
+    "analisador": "Analyzer",
+    "importador": "Importer",
+    "conferencia": "Checker"
+  },
+  "common": {
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "search": "Search...",
+    "filter": "Filter",
+    "all": "All",
+    "actions": "Actions",
+    "confirm": "Confirm",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "noData": "No records found."
+  },
+  "loteria": {
+    "lotofacil": "Lotofácil",
+    "lotomania": "Lotomania"
+  }
+}

@@ -1,0 +1,114 @@
+services:
+  # ============================================
+  # Aplicação
+  # ============================================
+  app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: sistema-aposta-app
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    environment:
+      - DATABASE_URL=mysql://root:root@db:3306/sistema_aposta
+      - OMNIROUTER_URL=http://omniroute:3000
+      - NODE_ENV=production
+      - HOST=0.0.0.0
+      - PORT=3000
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - app-network
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:3000/api/admin/health').then(r => r.ok ? process.exit(0) : process.exit(1)).catch(() => process.exit(1))"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # ============================================
+  # Banco de Dados - MariaDB
+  # ============================================
+  db:
+    image: mariadb:11-jammy
+    container_name: sistema-aposta-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: sistema_aposta
+      MYSQL_USER: aposta
+      MYSQL_PASSWORD: aposta123
+    ports:
+      - "3306:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+      - ./docker/init-db.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    command: >
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+      --innodb-buffer-pool-size=256M
+      --max-connections=100
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+    restart: unless-stopped
+    networks:
+      - app-network
+    security_opt:
+      - no-new-privileges:true
+
+  # ============================================
+  # phpMyAdmin - Gerenciamento MariaDB
+  # ============================================
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: sistema-aposta-phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: root
+      UPLOAD_LIMIT: 50M
+    ports:
+      - "8080:80"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - app-network
+
+  # ============================================
+  # OmniRoute - Gateway IA
+  # ============================================
+  omniroute:
+    image: diegosouzapw/omniroute:latest
+    container_name: sistema-aposta-omniroute
+    ports:
+      - "20128:3000"
+    volumes:
+      - omniroute-data:/app/data
+    environment:
+      - PORT=3000
+    restart: unless-stopped
+    networks:
+      - app-network
+
+volumes:
+  dbdata:
+    driver: local
+  omniroute-data:
+    driver: local
+
+networks:
+  app-network:
+    driver: bridge
+    name: sistema-aposta-network

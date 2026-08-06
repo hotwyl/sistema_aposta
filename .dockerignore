@@ -1,0 +1,44 @@
+# Dependencies
+node_modules
+
+# Build artifacts
+.nuxt
+.output
+.data
+.nitro
+.cache
+
+# Environment
+.env
+.env.local
+
+# VCS
+.git
+.gitignore
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# Docker
+docker-compose*.yml
+Dockerfile
+
+# Documentation
+*.md
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Tests
+tests/
+coverage/
+
+# Backup
+bkp/
