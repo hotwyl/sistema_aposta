@@ -3,6 +3,7 @@ import { db } from '~/server/database'
 import { apostas, concursos } from '~/server/database/schema'
 import { eq, count, desc } from 'drizzle-orm'
 import { handleDatabaseError } from '~/server/utils/errorHandler'
+import { cached } from '~/server/utils/cache'
 
 /**
  * GET /api/estatisticas
@@ -10,6 +11,8 @@ import { handleDatabaseError } from '~/server/utils/errorHandler'
  */
 export default defineEventHandler(async () => {
   try {
+    // Dashboard agrega várias queries; cacheia por 60s (invalidado ao importar/criar).
+    return await cached('estatisticas:dashboard', 60, async () => {
     const [
       totalApostasResult,
       lotofacilResult,
@@ -87,6 +90,7 @@ export default defineEventHandler(async () => {
     }
 
     return { data: stats }
+    })
   } catch (error) {
     handleDatabaseError(error)
   }

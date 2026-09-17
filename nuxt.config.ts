@@ -35,6 +35,9 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n',
     'nuxt-security',
     'shadcn-nuxt',
+    // SEO / GEO / AEO
+    '@nuxtjs/sitemap',
+    '@nuxtjs/robots',
   ],
 
   // ============================================
@@ -88,30 +91,71 @@ export default defineNuxtConfig({
   site: {
     url: process.env.NUXT_PUBLIC_SITE_URL || 'http://localhost:3000',
     name: 'Sistema de Aposta',
+    description: 'Análise e gestão inteligente de apostas em loterias brasileiras (Lotofácil e Lotomania).',
+    defaultLocale: 'pt-BR',
   },
+
+  // Robots (SEO): indexação liberada, bloqueia apenas rotas internas.
+  robots: {
+    disallow: ['/api/'],
+  },
+
+  // Sitemap (SEO): gerado automaticamente a partir das rotas.
+  sitemap: {
+    autoLastmod: true,
+  },
+
+
 
   // ============================================
   // Nuxt Security
   // ============================================
   security: {
+    strict: false,
     headers: {
       crossOriginEmbedderPolicy: 'unsafe-none',
       contentSecurityPolicy: {
         'base-uri': ["'none'"],
+        'default-src': ["'self'"],
+        'connect-src': ["'self'"],
         'font-src': ["'self'", 'https://cdnjs.cloudflare.com', 'data:'],
         'form-action': ["'self'"],
         'frame-ancestors': ["'self'"],
         'img-src': ["'self'", 'data:', 'https:'],
         'object-src': ["'none'"],
+        'script-src': ["'self'", "'unsafe-inline'", "'nonce-{{nonce}}'", 'https://cdnjs.cloudflare.com'],
         'script-src-attr': ["'none'"],
         'style-src': ["'self'", "'unsafe-inline'", 'https://cdnjs.cloudflare.com'],
         'upgrade-insecure-requests': process.env.NODE_ENV === 'production',
       },
+      permissionsPolicy: {
+        camera: [],
+        microphone: [],
+        geolocation: [],
+        payment: [],
+        usb: [],
+      },
+      referrerPolicy: 'strict-origin-when-cross-origin',
+      xContentTypeOptions: 'nosniff',
+      xFrameOptions: 'SAMEORIGIN',
+      strictTransportSecurity: {
+        maxAge: 31536000,
+        includeSubdomains: true,
+        preload: true,
+      },
     },
+    // Rate limit em memória (por instância). Em cluster, o storage 'queue'
+    // do Redis pode ser usado por um limitador dedicado, se necessário.
     rateLimiter: {
       tokensPerInterval: 100,
       interval: 60000,
     },
+    // Bloqueia payloads gigantes na borda (o middleware sanitize.ts refina por rota).
+    requestSizeLimiter: {
+      maxRequestSizeInBytes: 16 * 1024 * 1024,
+      maxUploadFileRequestInBytes: 16 * 1024 * 1024,
+    },
+    xssValidator: false,
   },
 
   // ============================================
@@ -119,10 +163,12 @@ export default defineNuxtConfig({
   // ============================================
   runtimeConfig: {
     databaseUrl: process.env.DATABASE_URL || 'mysql://root:root@localhost:3306/sistema_aposta',
+    redisUrl: process.env.REDIS_URL || 'redis://localhost:6379',
     sentryDsn: process.env.SENTRY_DSN || '',
-    omnirouterUrl: process.env.OMNIROUTER_URL || 'http://localhost:20128',
-    omnirouterApiKey: process.env.OMNIROUTER_API_KEY || '',
-    omnirouterModel: process.env.OMNIROUTER_MODEL || 'openai/gpt-4o-mini',
+    // IA Gateway - 9Router (OpenAI-compatible)
+    nineRouterUrl: process.env.NINEROUTER_URL || 'http://localhost:20128',
+    nineRouterApiKey: process.env.NINEROUTER_API_KEY || '',
+    nineRouterModel: process.env.NINEROUTER_MODEL || 'auto/best',
     smtpHost: process.env.SMTP_HOST || '',
     smtpPort: process.env.SMTP_PORT || '587',
     smtpUser: process.env.SMTP_USER || '',
@@ -143,6 +189,8 @@ export default defineNuxtConfig({
     externals: {
       inline: ['xlsx', 'mysql2'],
     },
+    // Storage (Redis) para cache/jobs é montado em RUNTIME por
+    // server/plugins/storage.ts (lê REDIS_URL do runtimeConfig).
     routeRules: {
       '/api/**': {
         cors: false,

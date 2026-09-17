@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useLoadingStore } from '~/stores/loading'
 
-useHead({ title: 'Números em Atraso - Sistema de Aposta' })
+useSeo({ title: 'Números em Atraso', path: '/analisador/atrasos', description: 'Veja os números mais atrasados da Lotofácil e Lotomania.' })
 
 const loading = useLoadingStore()
 const tipo = ref<'lotofacil' | 'lotomania'>('lotofacil')

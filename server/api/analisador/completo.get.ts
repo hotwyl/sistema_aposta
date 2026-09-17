@@ -3,6 +3,7 @@ import { db } from '~/server/database'
 import { concursos } from '~/server/database/schema'
 import { eq, desc } from 'drizzle-orm'
 import { handleDatabaseError } from '~/server/utils/errorHandler'
+import { cached } from '~/server/utils/cache'
 
 /**
  * GET /api/analisador/completo?tipo=lotofacil
@@ -22,6 +23,8 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
+    // Análise completa é cara (varre todos os concursos). Cacheia por 5 min por tipo.
+    return await cached(`analise:completo:${tipo}`, 300, async () => {
     const todosConcursos = await db.select().from(concursos)
       .where(eq(concursos.tipoLoteria, tipo))
       .orderBy(desc(concursos.numeroConcurso))
@@ -116,6 +119,7 @@ export default defineEventHandler(async (event) => {
     }
 
     return { data: resultado }
+    })
   } catch (error) {
     if (error && typeof error === 'object' && 'statusCode' in error) throw error
     handleDatabaseError(error)

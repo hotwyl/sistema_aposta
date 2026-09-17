@@ -1,9 +1,8 @@
 <script setup lang="ts">
-useHead({
-  title: 'Política de Privacidade - Sistema de Aposta',
-  meta: [
-    { name: 'description', content: 'Política de Privacidade do Sistema de Aposta em conformidade com a LGPD (Lei nº 13.709/2018).' },
-  ],
+useSeo({
+  title: 'Política de Privacidade',
+  path: '/privacidade',
+  description: 'Política de Privacidade do Sistema de Aposta em conformidade com LGPD, GDPR, CCPA e POPIA.',
 })
 </script>
 
@@ -19,7 +18,9 @@ useHead({
       <div class="flex items-center gap-2 p-3 bg-brand-50 dark:bg-brand-900/20 rounded-lg border border-brand-100 dark:border-brand-800/30 mb-6">
         <i class="fas fa-gavel text-brand-600 text-sm" aria-hidden="true"></i>
         <p class="text-xs text-brand-700 dark:text-brand-300 m-0">
-          Em conformidade com a <strong>Lei Geral de Proteção de Dados (LGPD) — Lei nº 13.709/2018</strong>
+          Em conformidade com as principais normas de privacidade:
+          <strong>LGPD</strong> (Brasil, Lei nº 13.709/2018), <strong>GDPR</strong> (União Europeia),
+          <strong>CCPA</strong> (Califórnia, EUA) e <strong>POPIA</strong> (África do Sul).
         </p>
       </div>
 
@@ -59,7 +60,7 @@ useHead({
 
       <h2 class="text-lg font-semibold mt-8 mb-3">6. Armazenamento e Segurança</h2>
       <ul class="list-disc list-inside space-y-1 ml-4">
-        <li>Dados armazenados em banco PostgreSQL com conexão segura</li>
+        <li>Dados armazenados em banco de dados MariaDB com conexão segura</li>
         <li>Headers de segurança HTTP (CSP, HSTS, X-Frame-Options)</li>
         <li>Rate limiting para proteção contra abuso</li>
         <li>Validação e sanitização de todas as entradas</li>

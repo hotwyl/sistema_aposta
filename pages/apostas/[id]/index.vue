@@ -2,7 +2,7 @@
 import { h } from 'vue'
 import { createColumnHelper } from '@tanstack/vue-table'
 
-useHead({ title: 'Detalhes da Aposta - Sistema de Aposta' })
+useSeo({ title: 'Detalhes da Aposta', description: 'Detalhes e desempenho de uma aposta cadastrada.' })
 
 const route = useRoute()
 const id = route.params.id as string

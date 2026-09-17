@@ -4,7 +4,7 @@ import { createColumnHelper } from '@tanstack/vue-table'
 import { useLoadingStore } from '~/stores/loading'
 import { useAlert } from '~/composables/useAlert'
 
-useHead({ title: 'Concursos - Sistema de Aposta' })
+useSeo({ title: 'Concursos', path: '/concursos', description: 'Histórico de concursos da Lotofácil e Lotomania com números sorteados.' })
 
 const loading = useLoadingStore()
 const alert = useAlert()

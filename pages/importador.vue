@@ -2,7 +2,7 @@
 import { useLoadingStore } from '~/stores/loading'
 import { useAlert } from '~/composables/useAlert'
 
-useHead({ title: 'Importador de Dados - Sistema de Aposta' })
+useSeo({ title: 'Importador de Dados', path: '/importador', description: 'Importe resultados de concursos (CSV, XLS, XLSX) para análise no Sistema de Aposta.' })
 
 const loading = useLoadingStore()
 const alert = useAlert()

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useLoadingStore } from '~/stores/loading'
 
-useHead({ title: 'Analisador Estatístico - Sistema de Aposta' })
+useSeo({ title: 'Analisador Estatístico', path: '/analisador', description: 'Análise estatística completa: frequência, atrasos, par/ímpar e repetições.' })
 
 const loading = useLoadingStore()
 const tipo = ref<'lotofacil' | 'lotomania'>('lotofacil')

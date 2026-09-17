@@ -2,7 +2,7 @@
 import { useLoadingStore } from '~/stores/loading'
 import { useAlert } from '~/composables/useAlert'
 
-useHead({ title: 'Nova Aposta - Sistema de Aposta' })
+useSeo({ title: 'Nova Aposta', path: '/apostas/nova', description: 'Cadastre uma nova aposta da Lotofácil ou Lotomania.' })
 
 const loading = useLoadingStore()
 const alert = useAlert()

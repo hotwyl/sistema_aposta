@@ -2,7 +2,7 @@
 import { useLoadingStore } from '~/stores/loading'
 import { useAlert } from '~/composables/useAlert'
 
-useHead({ title: 'Duplicatas - Sistema de Aposta' })
+useSeo({ title: 'Duplicatas', path: '/apostas/duplicatas', description: 'Encontre e remova apostas duplicadas.' })
 
 const loading = useLoadingStore()
 const alert = useAlert()

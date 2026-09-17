@@ -131,9 +131,6 @@ watch(() => route.path, () => {
             <NuxtLink to="/sobre" role="menuitem" class="flex items-center py-2.5 px-3 text-sm text-gray-600 dark:text-gray-400 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50">
               <i class="fas fa-info-circle w-5 mr-3 text-center text-xs" aria-hidden="true"></i>Sobre
             </NuxtLink>
-            <NuxtLink to="/sobre" role="menuitem" class="flex items-center py-2.5 px-3 text-sm text-gray-600 dark:text-gray-400 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50">
-              <i class="fas fa-info-circle w-5 mr-3 text-center text-xs" aria-hidden="true"></i>Sobre
-            </NuxtLink>
             <NuxtLink to="/termos" role="menuitem" class="flex items-center py-2.5 px-3 text-sm text-gray-600 dark:text-gray-400 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50">
               <i class="fas fa-file-contract w-5 mr-3 text-center text-xs" aria-hidden="true"></i>Termos de Uso
             </NuxtLink>

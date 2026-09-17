@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useLoadingStore } from '~/stores/loading'
 
-useHead({ title: 'Ranking de Apostas - Sistema de Aposta' })
+useSeo({ title: 'Ranking de Apostas', path: '/apostas/ranking', description: 'Ranking das apostas com melhor desempenho.' })
 
 const loading = useLoadingStore()
 

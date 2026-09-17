@@ -1,8 +1,33 @@
 <script setup lang="ts">
-useHead({
+const _seoConfig = useRuntimeConfig()
+const _siteUrl = ((_seoConfig.public.siteUrl as string) || 'http://localhost:3000').replace(/\/+$/, '')
+useSeoMeta({
   title: 'Sistema de Aposta - Análise Inteligente de Loterias',
-  meta: [
-    { name: 'description', content: 'Plataforma inteligente para análise e gestão de apostas em loterias brasileiras. Lotofácil e Lotomania com estatísticas, simulador e conferência.' },
+  description:
+    'Plataforma inteligente para análise e gestão de apostas em loterias brasileiras. Lotofácil e Lotomania com estatísticas, simulador e conferência.',
+  keywords: 'loteria, lotofácil, lotomania, apostas, análise, simulador, conferência, estatística',
+  ogTitle: 'Sistema de Aposta - Análise Inteligente de Loterias',
+  ogDescription: 'Análise e gestão inteligente de apostas em loterias brasileiras.',
+  ogType: 'website',
+  ogUrl: _siteUrl,
+  ogSiteName: 'Sistema de Aposta',
+  ogLocale: 'pt_BR',
+  twitterCard: 'summary_large_image',
+})
+useHead({
+  link: [{ rel: 'canonical', href: _siteUrl }],
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        name: 'Sistema de Aposta',
+        description: 'Análise estatística de loterias brasileiras (Lotofácil e Lotomania).',
+        url: _siteUrl,
+        inLanguage: 'pt-BR',
+      }),
+    },
   ],
 })
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-useHead({ title: 'Sobre - Sistema de Aposta' })
+useSeo({ title: 'Sobre', path: '/sobre', description: 'Conheça o Sistema de Aposta: plataforma de análise estatística de loterias brasileiras.' })
 </script>
 
 <template>
@@ -33,7 +33,8 @@ useHead({ title: 'Sobre - Sistema de Aposta' })
       <section>
         <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">Tecnologias</h2>
         <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-          Nuxt 4 + Nitro + TypeScript + Tailwind CSS + PostgreSQL 17 + Drizzle ORM + Redis 8 + Pinia + Zod + Docker.
+          Nuxt 3 + Nitro + TypeScript + Tailwind CSS + MariaDB 11 + Drizzle ORM + Redis + Pinia + Zod + Docker,
+          com IA via gateway 9Router.
         </p>
       </section>
 

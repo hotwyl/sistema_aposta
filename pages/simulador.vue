@@ -2,7 +2,7 @@
 import { useLoadingStore } from '~/stores/loading'
 import { useAlert } from '~/composables/useAlert'
 
-useHead({ title: 'Simulador de Números - Sistema de Aposta' })
+useSeo({ title: 'Simulador de Números', path: '/simulador', description: 'Gere apostas otimizadas para Lotofácil e Lotomania com estatística e IA.' })
 
 const loading = useLoadingStore()
 const alert = useAlert()

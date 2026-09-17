@@ -4,7 +4,7 @@ import { createColumnHelper } from '@tanstack/vue-table'
 import { useLoadingStore } from '~/stores/loading'
 import { useAlert } from '~/composables/useAlert'
 
-useHead({ title: 'Apostas - Sistema de Aposta' })
+useSeo({ title: 'Apostas', path: '/apostas', description: 'Gerencie suas apostas cadastradas da Lotofácil e Lotomania.' })
 
 const loading = useLoadingStore()
 const alert = useAlert()

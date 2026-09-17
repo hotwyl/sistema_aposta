@@ -2,7 +2,7 @@ import { defineEventHandler, getQuery } from 'h3'
 import { db } from '~/server/database'
 import { concursos } from '~/server/database/schema'
 import { eq, desc } from 'drizzle-orm'
-import { IAService } from '~/server/services/ia.service'
+import { createIAService } from '~/server/services/ia.service'
 
 /**
  * GET /api/estatisticas/analise-ia?tipo=lotofacil
@@ -12,11 +12,7 @@ export default defineEventHandler(async (event) => {
   const query = getQuery(event)
   const tipo = (query.tipo as string) || 'lotofacil'
 
-  const iaService = new IAService({
-    omnirouterUrl: process.env.OMNIROUTER_URL || '',
-    omnirouterApiKey: process.env.OMNIROUTER_API_KEY || '',
-    omnirouterModel: process.env.OMNIROUTER_MODEL || 'auto/best-coding',
-  })
+  const iaService = createIAService()
 
   if (!iaService.isConfigured()) {
     return { data: { disponivel: false, mensagem: 'IA não configurada.' } }

@@ -3,6 +3,7 @@ import { db } from '~/server/database'
 import { concursos } from '~/server/database/schema'
 import { and, eq } from 'drizzle-orm'
 import { handleDatabaseError } from '~/server/utils/errorHandler'
+import { invalidatePrefix, invalidate } from '~/server/utils/cache'
 import * as XLSX from 'xlsx'
 
 interface ParsedRow {
@@ -175,6 +176,12 @@ export default defineEventHandler(async (event) => {
       })
 
       importados++
+    }
+
+    // Invalida caches derivados dos concursos (análises + dashboard).
+    if (importados > 0) {
+      await invalidatePrefix('analise:')
+      await invalidate('estatisticas:dashboard')
     }
 
     return {

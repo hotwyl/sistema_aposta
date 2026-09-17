@@ -1,5 +1,5 @@
 # docker compose -f docker-compose.dev.yml up
-# Sobe MariaDB, phpMyAdmin e OmniRoute para desenvolvimento local.
+# Sobe MariaDB, Redis, phpMyAdmin e 9Router para desenvolvimento local.
 # A aplicação roda fora do container com `npm run dev`.
 
 services:
@@ -28,6 +28,22 @@ services:
     networks:
       - dev-network
 
+  redis:
+    image: redis:7-alpine
+    container_name: sistema-aposta-redis-dev
+    command: redis-server --appendonly yes --maxmemory 128mb --maxmemory-policy allkeys-lru
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata-dev:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks:
+      - dev-network
+
   phpmyadmin:
     image: phpmyadmin:latest
     container_name: sistema-aposta-phpmyadmin-dev
@@ -45,21 +61,20 @@ services:
     networks:
       - dev-network
 
-  omniroute:
-    image: diegosouzapw/omniroute:latest
-    container_name: sistema-aposta-omniroute-dev
+  9router:
+    image: decolua/9router:latest
+    container_name: sistema-aposta-9router-dev
     ports:
-      - "20128:3000"
+      - "20128:20128"
     volumes:
-      - omniroute-dev-data:/app/data
-    environment:
-      - PORT=3000
+      - ninerouter-dev-data:/app/data
     networks:
       - dev-network
 
 volumes:
   dbdata-dev:
-  omniroute-dev-data:
+  redisdata-dev:
+  ninerouter-dev-data:
 
 networks:
   dev-network:

@@ -7,8 +7,11 @@ const connectionString = process.env.DATABASE_URL || 'mysql://root:root@localhos
 const pool = mysql.createPool({
   uri: connectionString,
   waitForConnections: true,
-  connectionLimit: 10,
+  connectionLimit: Number(process.env.DB_POOL_LIMIT) || 10,
+  maxIdle: 10,
   idleTimeout: 20000,
+  queueLimit: 0,
+  connectTimeout: 10000,
   enableKeepAlive: true,
   keepAliveInitialDelay: 10000,
 })

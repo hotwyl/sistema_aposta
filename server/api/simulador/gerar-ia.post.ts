@@ -1,5 +1,5 @@
 import { defineEventHandler, readBody, createError } from 'h3'
-import { IAService } from '~/server/services/ia.service'
+import { createIAService } from '~/server/services/ia.service'
 import { analisadorService } from '~/server/services/analisador.service'
 import { handleDatabaseError } from '~/server/utils/errorHandler'
 import { z } from 'zod'
@@ -24,16 +24,12 @@ export default defineEventHandler(async (event) => {
 
   const { tipoLoteria, quantidadeJogos } = parsed.data
 
-  const iaService = new IAService({
-    omnirouterUrl: process.env.OMNIROUTER_URL || '',
-    omnirouterApiKey: process.env.OMNIROUTER_API_KEY || '',
-    omnirouterModel: process.env.OMNIROUTER_MODEL || 'openai/gpt-4o-mini',
-  })
+  const iaService = createIAService()
 
   if (!iaService.isConfigured()) {
     throw createError({
       statusCode: 503,
-      statusMessage: 'OmniRoute não configurado. Defina OMNIROUTER_URL e OMNIROUTER_API_KEY nas variáveis de ambiente.',
+      statusMessage: '9Router não configurado. Defina NINEROUTER_URL e NINEROUTER_API_KEY nas variáveis de ambiente.',
     })
   }
 
@@ -97,7 +93,7 @@ export default defineEventHandler(async (event) => {
     return {
       data: {
         sucesso: true,
-        provider: `OmniRoute (${process.env.OMNIROUTER_MODEL || 'auto'})`,
+        provider: `9Router (${useRuntimeConfig().nineRouterModel})`,
         tipo: tipoLoteria,
         numeros: todosJogos[0],
         jogos: todosJogos,

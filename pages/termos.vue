@@ -1,9 +1,8 @@
 <script setup lang="ts">
-useHead({
-  title: 'Termos de Uso - Sistema de Aposta',
-  meta: [
-    { name: 'description', content: 'Termos de Uso do Sistema de Aposta. Condições de utilização da plataforma.' },
-  ],
+useSeo({
+  title: 'Termos de Uso',
+  path: '/termos',
+  description: 'Termos de Uso do Sistema de Aposta. Condições de utilização da plataforma.',
 })
 </script>
 

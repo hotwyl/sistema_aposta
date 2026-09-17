@@ -2,7 +2,7 @@
 import { useLoadingStore } from '~/stores/loading'
 import { useAlert } from '~/composables/useAlert'
 
-useHead({ title: 'Editar Aposta - Sistema de Aposta' })
+useSeo({ title: 'Editar Aposta', description: 'Edite os dados de uma aposta cadastrada.' })
 
 const loading = useLoadingStore()
 const alert = useAlert()
